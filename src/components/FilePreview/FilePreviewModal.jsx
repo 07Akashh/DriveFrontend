@@ -1,23 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ShareDialog from "../ShareDialog/ShareDialog";
 import api from "../../services/api";
-import { auth } from "../../config/firebase";
+import { useAuth } from "../../context/AuthContext";
 
 const FilePreviewModal = ({ file, onClose }) => {
   const [showShare, setShowShare] = useState(false);
-  const [token, setToken] = useState(null);
-
-  useEffect(() => {
-    const getToken = async () => {
-      try {
-        const user = auth.currentUser;
-        if (user) setToken(await user.getIdToken());
-      } catch (e) {
-        console.error("Token error:", e);
-      }
-    };
-    getToken();
-  }, []);
+  const { accessToken: token } = useAuth();
 
   if (!file) return null;
 
