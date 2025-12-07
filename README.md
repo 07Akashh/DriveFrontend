@@ -72,18 +72,22 @@ src/
 
 3. **Configure environment variables**
 
-   Create a `.env` file:
+   Copy `.env.example` to `.env` and fill in your values:
+
+   ```bash
+   cp .env.example .env
+   ```
 
    ```env
-   # API Configuration
-   REACT_APP_API_URL=http://localhost:5000/api/v1
-   REACT_APP_SOCKET_URL=http://localhost:5000
+   # Environment (LOCAL, DEV, PROD)
+   REACT_APP_ENV=LOCAL
 
-   # Basic Auth (if required by backend)
-   REACT_APP_BASIC_AUTH_USERNAME=admin
-   REACT_APP_BASIC_AUTH_PASSWORD=password
+   # Basic Auth Credentials (for API access)
+   REACT_APP_BASIC_AUTH_USERNAME=your_username
+   REACT_APP_BASIC_AUTH_PASSWORD=your_password
 
    # Firebase Configuration
+   # Get these from Firebase Console > Project Settings > General
    REACT_APP_FIREBASE_API_KEY=your_api_key
    REACT_APP_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
    REACT_APP_FIREBASE_PROJECT_ID=your_project_id
