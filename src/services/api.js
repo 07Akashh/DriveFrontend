@@ -1,9 +1,9 @@
 import axios from "axios";
 import { auth } from "../config/firebase";
-
+import allEnv from "../constant/index";
 // Create axios instance
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "http://localhost:8080/api/v1",
+  baseURL: allEnv.BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },

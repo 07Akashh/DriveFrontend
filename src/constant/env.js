@@ -1,2 +1,2 @@
-const ENV = process.env.NEXT_ENV || 'LOCAL';
+const ENV = process.env.REACT_APP_ENV || 'LOCAL';
 export { ENV };

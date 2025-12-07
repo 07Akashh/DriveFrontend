@@ -4,7 +4,7 @@ import toastHandler from "./Toasthandler";
 import allEnv from "../constant/index";
 
 const toast = toastHandler();
-
+console.log(allEnv);
 export const ApiResponsehandler = async ({
   url,
   headers,

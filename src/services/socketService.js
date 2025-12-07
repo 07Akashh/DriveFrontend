@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-
+import allEnv from "../constant/index";
 class SocketService {
   constructor() {
     this.socket = null;
@@ -24,7 +24,7 @@ class SocketService {
     }
 
     const socketUrl =
-      process.env.REACT_APP_SOCKET_URL || "http://localhost:3000";
+      allEnv.SOCKET_URL;
 
     this.socket = io(socketUrl, {
       query: { userId },
