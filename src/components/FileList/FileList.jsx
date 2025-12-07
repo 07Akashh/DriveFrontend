@@ -3,7 +3,7 @@ import ShareDialog from "../ShareDialog/ShareDialog";
 import { useCustomMutation } from "../../TanstackQuery/QueryHooks";
 import api from "../../services/api";
 import API_ENDPOINTS from "../../constant/apiEndpoints";
-import { auth } from "../../config/firebase";
+import { useAuth } from "../../context/AuthContext";
 import { useQueryClient } from "@tanstack/react-query";
 import { formatDate, formatSize } from "../../utils/AsyncUtils";
 
@@ -16,7 +16,7 @@ const FileList = ({
 }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [showShareDialog, setShowShareDialog] = useState(false);
-  const [token, setToken] = useState(null);
+  const { accessToken: token } = useAuth();
   const { mutation: deleteMutation } = useCustomMutation({
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["files"] });
@@ -28,21 +28,6 @@ const FileList = ({
     },
   });
   const queryClient = useQueryClient();
-
-  React.useEffect(() => {
-    const getToken = async () => {
-      try {
-        const user = auth.currentUser;
-        if (user) {
-          const t = await user.getIdToken();
-          setToken(t);
-        }
-      } catch (e) {
-        console.error("Failed to get token:", e);
-      }
-    };
-    getToken();
-  }, []);
 
   const getStreamUrl = (file) => {
     const baseUrl = `${api.defaults.baseURL}${file.streamUrl}`;

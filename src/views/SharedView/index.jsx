@@ -1,29 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 import { useCustomMutation, useCustomQuery } from "../../TanstackQuery/QueryHooks";
 import API_ENDPOINTS from "../../constant/apiEndpoints";
 import api from "../../services/api";
-import { auth } from "../../config/firebase";
+import { useAuth } from "../../context/AuthContext";
 
 const SharedFileViewer = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [token, setToken] = useState(null);
+  const { accessToken: token } = useAuth();
   const [accessStatus, setAccessStatus] = useState(null);
-
-  useEffect(() => {
-    const getToken = async () => {
-      try {
-        const user = auth.currentUser;
-        if (user) setToken(await user.getIdToken());
-      } catch (e) {
-        console.error("Token error:", e);
-      }
-    };
-    getToken();
-  }, []);
 
   const getUrl = (path) => {
     const baseUrl = `${api.defaults.baseURL}${path}`;
