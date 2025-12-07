@@ -1,70 +1,213 @@
-# Getting Started with Create React App
+# Cloud Drive Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, responsive cloud storage frontend built with React. Features a Google Drive-like interface with file upload, sharing, and preview capabilities.
 
-## Available Scripts
+## 🚀 Features
 
-In the project directory, you can run:
+- **File Management**: Upload, view, download, and delete files
+- **Real-time Uploads**: Chunked uploads with progress tracking via Socket.IO
+- **File Preview**: In-app preview for images, videos, audio, and PDFs
+- **File Sharing**: Share files with specific users or via public links
+- **Trash System**: Soft delete with restore functionality
+- **Responsive Design**: Works on desktop and mobile devices
+- **Dark/Light Theme**: Toggle between themes
+- **Search**: Filter files by name
 
-### `npm start`
+## 🛠️ Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Framework**: React 18
+- **Routing**: React Router v6
+- **State Management**: TanStack Query (React Query)
+- **Authentication**: Firebase Auth
+- **Real-time**: Socket.IO Client
+- **HTTP Client**: Axios
+- **Styling**: Tailwind CSS
+- **Notifications**: Sonner
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📁 Project Structure
 
-### `npm test`
+```
+src/
+├── components/           # Reusable UI components
+│   ├── EmptyState/       # Empty state displays
+│   ├── FileList/         # File grid/list view
+│   ├── FilePreview/      # File preview modal
+│   ├── FileUpload/       # Upload dialog
+│   ├── Loading/          # Loading spinners
+│   ├── Pagination/       # Pagination controls
+│   └── ShareDialog/      # File sharing modal
+├── config/               # Firebase configuration
+├── constant/             # API endpoints and constants
+├── context/              # React contexts (Auth, Theme)
+├── hooks/                # Custom React hooks
+├── layout/               # Layout components
+│   ├── AuthLayout.jsx    # Unauthenticated layout
+│   └── MainLayout.jsx    # Authenticated layout with sidebar
+├── routes/               # Route definitions
+├── services/             # API and Socket services
+├── TanstackQuery/        # Query configuration
+├── utils/                # Utility functions
+└── views/                # Page-level components
+    ├── Home/             # Landing page
+    ├── MyFiles/          # User's files view
+    ├── Shared/           # Shared with me view
+    ├── SharedView/       # Public file viewer
+    └── Trash/            # Trashed files view
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🔧 Installation
 
-### `npm run build`
+1. **Clone the repository**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   ```bash
+   git clone <repository-url>
+   cd frontend
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. **Install dependencies**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```bash
+   npm install
+   ```
 
-### `npm run eject`
+3. **Configure environment variables**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   Create a `.env` file:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```env
+   # API Configuration
+   REACT_APP_API_URL=http://localhost:5000/api/v1
+   REACT_APP_SOCKET_URL=http://localhost:5000
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   # Basic Auth (if required by backend)
+   REACT_APP_BASIC_AUTH_USERNAME=admin
+   REACT_APP_BASIC_AUTH_PASSWORD=password
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   # Firebase Configuration
+   REACT_APP_FIREBASE_API_KEY=your_api_key
+   REACT_APP_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+   REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+   REACT_APP_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+   REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+   REACT_APP_FIREBASE_APP_ID=your_app_id
+   ```
 
-## Learn More
+4. **Start the development server**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ```bash
+   npm start
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   Open [http://localhost:3000](http://localhost:3000) to view in browser.
 
-### Code Splitting
+## 📱 Routes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+| Route            | Description          |
+| ---------------- | -------------------- |
+| `/`              | Landing page (login) |
+| `/drive/files`   | My files             |
+| `/drive/shared`  | Files shared with me |
+| `/drive/trash`   | Trashed files        |
+| `/file/:id/view` | Public file viewer   |
 
-### Analyzing the Bundle Size
+## 🎨 Components
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Reusable Components
 
-### Making a Progressive Web App
+- **EmptyState**: Display when no items exist
+- **Loading**: Loading spinner with message
+- **Pagination**: Page navigation controls
+- **FileList**: Grid display of files with actions
+- **FilePreviewModal**: Full-screen file preview
+- **ShareDialog**: Share settings modal
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Usage Example
 
-### Advanced Configuration
+```jsx
+import { Loading, EmptyState, Pagination } from "./components";
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+// Loading state
+<Loading message="Loading files..." size="lg" />
 
-### Deployment
+// Empty state
+<EmptyState
+  icon={EmptyState.Icons.FILE}
+  title="No files"
+  message="Upload your first file"
+  action={<button>Upload</button>}
+/>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+// Pagination
+<Pagination
+  page={0}
+  limit={12}
+  total={100}
+  onPageChange={(page) => setPage(page)}
+  onLimitChange={(limit) => setLimit(limit)}
+/>
+```
 
-### `npm run build` fails to minify
+## 🔐 Authentication
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The app uses Firebase Authentication with Google Sign-In:
+
+```jsx
+import { useAuth } from "./context/AuthContext";
+
+const { user, isLoggedIn, login, logout } = useAuth();
+
+// Login with Google
+await login();
+
+// Logout
+await logout();
+```
+
+## 📡 API Integration
+
+API calls are made using TanStack Query:
+
+```jsx
+import { useCustomQuery, useCustomMutation } from "./TanstackQuery/QueryHooks";
+import API_ENDPOINTS from "./constant/apiEndpoints";
+
+// Query
+const { data, isLoading } = useCustomQuery({
+  queryProps: { queryKey: ["files"] },
+  payload: { url: API_ENDPOINTS.MEDIA.LIST },
+});
+
+// Mutation
+const { mutation } = useCustomMutation();
+await mutation.mutateAsync({
+  url: API_ENDPOINTS.MEDIA.DELETE(fileId),
+  method: "DELETE",
+});
+```
+
+## 🎯 Key Features
+
+### File Upload
+
+- Drag & drop or click to upload
+- Multiple file selection
+- Progress tracking per file
+- Image compression before upload
+
+### File Preview
+
+- Images: Full view with zoom
+- Videos: Built-in player
+- Audio: Audio player
+- PDFs: Embedded viewer (toolbar hidden)
+
+### File Sharing
+
+- Share with specific email addresses
+- Permission levels (View/Edit)
+- Public link generation
+- Link expiry dates
+
+## 📄 License
+
+MIT

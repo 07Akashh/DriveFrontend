@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
+import QueryProvider from "./TanstackQuery/QueryProvider";
+import ThemeRoutes from "./routes";
+import { Toaster } from "sonner";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider>
+      <AuthProvider>
+        <QueryProvider>
+          <Router>
+            <Suspense
+              fallback={
+                <div className="loader">
+                  <div className="spinner w-8 h-8" />
+                </div>
+              }
+            >
+              <ThemeRoutes />
+            </Suspense>
+            <Toaster position="top-right" richColors />
+          </Router>
+        </QueryProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
