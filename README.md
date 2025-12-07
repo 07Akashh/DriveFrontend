@@ -60,8 +60,8 @@ src/
 1. **Clone the repository**
 
    ```bash
-   git clone <repository-url>
-   cd frontend
+   git clone https://github.com/07Akashh/DriveFrontend
+   cd DriveFrontend
    ```
 
 2. **Install dependencies**
